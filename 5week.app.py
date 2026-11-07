@@ -585,8 +585,8 @@ html_code = """
 st.sidebar.title("⚙️ 구글 시트 자동 저장")
 sheet_url = st.sidebar.text_input(
     "구글 시트 URL 입력:",
-    placeholder="https://docs.google.com/spreadsheets/d/...",
-    help="데이터를 저장할 구글 시트 웹 주소를 입력하세요.",
+    value="https://docs.google.com/spreadsheets/d/1oLhLk1KO8ZzBHL0-AdZVlrmWTBejmUB8HIVbqJ6qfok/edit",
+    help="데이터를 저장할 구글 시트 웹 주소입니다."
 )
 
 st.sidebar.markdown("---")
