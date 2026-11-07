@@ -8,37 +8,31 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. 맨 처음 HTML 디자인 시스템 1:1 이식 (Cyberpunk Glassmorphism CSS)
+# 2. 맨 처음 오리지널 디자인 시스템 CSS 이식
 st.markdown("""
 <style>
-    /* Pretendard 폰트 불러오기 및 기본 스타일 초기화 */
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
     
     html, body, [class*="css"] {
-        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
+        font-family: 'Pretendard', sans-serif !important;
     }
 
     .stApp {
         background-color: #0B1120 !important;
-        background-image: 
-            radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
         color: #FFFFFF !important;
     }
 
-    /* 패딩 최적화 */
     .main .block-container {
         padding-top: 2rem !important;
         padding-bottom: 2rem !important;
-        max-width: 1400px !important;
+        max-width: 1450px !important;
     }
 
-    /* 메인 히어로 타이틀 */
+    /* 메인 타이틀 */
     .hero-title {
         text-align: center;
         font-size: 2.8rem;
         font-weight: 800;
-        letter-spacing: -0.02em;
         background: linear-gradient(135deg, #FFFFFF 0%, #38BDF8 50%, #8B5CF6 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -47,54 +41,64 @@ st.markdown("""
 
     .hero-subtitle {
         text-align: center;
-        font-size: 1.15rem;
+        font-size: 1.1rem;
         color: #94A3B8;
         font-weight: 500;
         margin-bottom: 2rem;
     }
 
-    /* 핵심 흐름 네온 캡슐 */
-    .flow-container {
-        background: rgba(15, 23, 42, 0.7);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+    /* 상단 핵심 흐름 바 (원본 이미지 스타일 100% 구현) */
+    .flow-pill-box {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
         backdrop-filter: blur(12px);
-        border-radius: 50px;
-        padding: 14px 28px;
+        border-radius: 40px;
+        padding: 12px 24px;
         text-align: center;
-        margin-bottom: 2.5rem;
-        font-size: 1rem;
+        margin-bottom: 3rem;
+        font-size: 0.95rem;
         font-weight: 600;
+        color: #E2E8F0;
     }
-    .flow-highlight {
+    .flow-badge-tag {
+        background: rgba(56, 189, 248, 0.15);
         color: #38BDF8;
+        padding: 4px 12px;
+        border-radius: 20px;
         font-weight: 700;
+        margin-right: 10px;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .flow-arrow {
+        color: #10B981;
+        font-weight: 800;
+        margin: 0 8px;
     }
 
-    /* 글래스모피즘 메인 5주차 카드 */
-    .glass-card-box {
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+    /* 5주차 글래스 카드 (오리지널 디자인) */
+    .roadmap-glass-card {
+        background: rgba(17, 28, 51, 0.75);
+        border: 1.5px solid rgba(16, 185, 129, 0.3);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         border-radius: 20px;
-        padding: 24px 20px;
+        padding: 22px 18px;
         height: 100%;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        transition: all 0.3s ease;
     }
-    .glass-card-box:hover {
-        transform: translateY(-6px);
-        border-color: rgba(139, 92, 246, 0.5);
-        box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.25);
+    .roadmap-glass-card:hover {
+        border-color: rgba(16, 185, 129, 0.7);
+        transform: translateY(-5px);
     }
 
-    /* 주차 헤더 뱃지 */
-    .week-header-badge {
-        background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+    /* 주차별 뱃지 */
+    .week-pill {
+        background: linear-gradient(135deg, #0D9488 0%, #10B981 100%);
         color: #FFFFFF;
         font-weight: 800;
         font-size: 0.85rem;
@@ -102,78 +106,60 @@ st.markdown("""
         border-radius: 20px;
         display: inline-block;
         margin-bottom: 12px;
-        box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
 
-    .card-heading {
-        font-size: 1.15rem;
+    .card-heading-text {
+        font-size: 1.1rem;
         font-weight: 700;
-        color: #F8FAFC;
+        color: #FFFFFF;
         margin-bottom: 16px;
         line-height: 1.35;
         min-height: 48px;
     }
 
-    /* 체크리스트 스타일 */
-    .checklist-item {
-        font-size: 0.88rem;
+    .checklist-row {
+        font-size: 0.85rem;
         color: #CBD5E1;
         line-height: 1.6;
-        margin-bottom: 10px;
-        padding-left: 4px;
+        margin-bottom: 8px;
     }
 
-    /* 이번 주 목표 박스 (글로우 서식) */
-    .goal-banner {
-        background: rgba(56, 189, 248, 0.08);
-        border: 1px solid rgba(56, 189, 248, 0.3);
+    /* 이번 주 목표 박스 */
+    .goal-inner-box {
+        background: #0B1120;
+        border: 1px solid rgba(16, 185, 129, 0.3);
         border-radius: 12px;
-        padding: 12px 14px;
+        padding: 12px;
         margin-top: 16px;
     }
-    .goal-banner-title {
-        color: #38BDF8;
+    .goal-inner-title {
+        color: #10B981;
         font-size: 0.75rem;
         font-weight: 800;
-        text-transform: uppercase;
         margin-bottom: 4px;
         display: flex;
         align-items: center;
         gap: 4px;
     }
-    .goal-banner-desc {
+    .goal-inner-desc {
         color: #F1F5F9;
         font-size: 0.85rem;
         font-weight: 600;
-        line-height: 1.3;
     }
 
-    /* 하단 핵심 원칙 그리드 바 */
-    .principle-card-v2 {
-        background: rgba(15, 23, 42, 0.5);
+    /* 하단 핵심 원칙 그리드 카드 */
+    .principle-box-item {
+        background: rgba(17, 28, 51, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(10px);
         border-radius: 14px;
         padding: 18px 14px;
         text-align: center;
         height: 100%;
-        transition: border-color 0.2s;
-    }
-    .principle-card-v2:hover {
-        border-color: rgba(56, 189, 248, 0.4);
-    }
-    .principle-icon-title {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-    }
-    .principle-desc {
-        font-size: 0.82rem;
-        color: #94A3B8;
-        line-height: 1.4;
     }
 
-    /* 상하단 메뉴 영구 숨김 (Humanpick 스타일) */
+    /* 불필요한 UI 숨김 */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
@@ -184,15 +170,15 @@ st.markdown("""
 st.markdown('<div class="hero-title">디지털 상품을 통한 5주 로드맵</div>', unsafe_allow_html=True)
 st.markdown('<div class="hero-subtitle">아이디어를 수익으로 바꾸는 5단계 시스템[cite: 1]</div>', unsafe_allow_html=True)
 
-# 4. 핵심 흐름 라인
+# 4. 상단 핵심 흐름 바 (원본 이미지와 완벽히 일치하는 화살표 흐름)
 st.markdown("""
-<div class="flow-container">
-    <span class="flow-highlight">🎯 핵심 흐름</span> &nbsp;&nbsp;|&nbsp;&nbsp; 
-    주제 선정 &nbsp;➔&nbsp; 제품 설계 &nbsp;➔&nbsp; 페이지 제작 &nbsp;➔&nbsp; 자동화 구축 &nbsp;➔&nbsp; 오픈 & 개선[cite: 1]
+<div class="flow-pill-box">
+    <span class="flow-badge-tag">🎯 핵심 흐름</span> 
+    주제 선정 <span class="flow-arrow">➔</span> 제품 설계 <span class="flow-arrow">➔</span> 페이지 제작 <span class="flow-arrow">➔</span> 자동화 구축 <span class="flow-arrow">➔</span> 오픈 & 개선[cite: 1]
 </div>
 """, unsafe_allow_html=True)
 
-# 5. 5주차 데이터 구성 (원본 원문 100% 유지)
+# 5. 5주차 데이터 구성 (원본 내용 100% 유지)
 weeks = [
     {
         "week": "WEEK 1",
@@ -251,51 +237,51 @@ weeks = [
     }
 ]
 
-# 6. 5열 격자 배치 (글래스모피즘 네온 스타일 반영)
+# 6. 5열 격자 배치
 cols = st.columns(5)
 
 for idx, data in enumerate(weeks):
     with cols[idx]:
-        items_html = "".join([f'<div class="checklist-item">{item}</div>' for item in data["items"]])
+        items_html = "".join([f'<div class="checklist-row">{item}</div>' for item in data["items"]])
         
         st.markdown(f"""
-        <div class="glass-card-box">
+        <div class="roadmap-glass-card">
             <div>
-                <div><span class="week-header-badge">{data['week']}</span></div>
-                <div class="card-heading">{data['title']}</div>
+                <div><span class="week-pill">{data['week']}</span></div>
+                <div class="card-heading-text">{data['title']}</div>
                 <div>{items_html}</div>
             </div>
-            <div class="goal-banner">
-                <div class="goal-banner-title">🎯 이번 주 목표</div>
-                <div class="goal-banner-desc">{data['goal']}</div>
+            <div class="goal-inner-box">
+                <div class="goal-inner-title">💡 이번 주 목표</div>
+                <div class="goal-inner-desc">{data['goal']}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
 # 7. 하단 핵심 원칙 섹션
 st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: left; color: #F8FAFC; font-weight: 700; margin-bottom: 20px;'>💎 핵심 원칙</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: left; color: #FFFFFF; font-weight: 700; margin-bottom: 20px;'>💎 핵심 원칙</h3>", unsafe_allow_html=True)
 
 p_cols = st.columns(4)
 principles = [
     ("👤 고객 중심", "#38BDF8", "모든 진척은 고객의 문제와 성장에 집중합니다.[cite: 1]"),
-    ("💎 가치 우선", "#8B5CF6", "진짜 가치를 제공하고 성장을 추구합니다.[cite: 1]"),
+    ("💎 가치 우선", "#10B981", "진짜 가치를 제공하고 성장을 추구합니다.[cite: 1]"),
     ("📈 지속적 개선", "#EC4899", "데이터 피드백을 기반으로 계속 개선합니다.[cite: 1]"),
-    ("⚙️ 자동화", "#10B981", "시스템으로 확장하고 자동화합니다.[cite: 1]")
+    ("⚙️ 자동화", "#8B5CF6", "시스템으로 확장하고 자동화합니다.[cite: 1]")
 ]
 
 for idx, (title, color, desc) in enumerate(principles):
     with p_cols[idx]:
         st.markdown(f"""
-        <div class="principle-card-v2">
-            <div class="principle-icon-title" style="color: {color};">{title}</div>
-            <div class="principle-desc">{desc}</div>
+        <div class="principle-box-item">
+            <div style="color: {color}; font-weight: 700; font-size: 1rem; margin-bottom: 8px;">{title}</div>
+            <div style="font-size: 0.8rem; color: #94A3B8; line-height: 1.4;">{desc}</div>
         </div>
         """, unsafe_allow_html=True)
 
 # 8. 푸터
 st.markdown("""
-<div style="text-align: center; color: #475569; margin-top: 60px; padding-bottom: 20px; font-size: 0.8rem;">
-    © 2026 Upnomad. All rights reserved. 이 로드맵은 디지털 상품으로 수익을 만들기 위한 가이드입니다.[cite: 1]
+<div style="text-align: center; color: #475569; margin-top: 50px; padding-bottom: 20px; font-size: 0.75rem;">
+    © 2022 Upnomad. All rights reserved. 이 로드맵은 디지털 상품으로 수익을 만들기 위한 일반적인 가이드입니다.[cite: 1]
 </div>
 """, unsafe_allow_html=True)
